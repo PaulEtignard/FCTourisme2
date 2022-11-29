@@ -33,7 +33,7 @@ class Etablissement
 
     #[ORM\ManyToOne(inversedBy: 'etablissements')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ville $Ville = null;
+    private ?Ville $Ville = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
