@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Etablissement {
+
+-nom : string not null
+-slug : string not null
+-descript° : text not null
+-numTel : string not null
+-adresse : string not null
+-ville : Ville not null
+-email : string not null
+-image : string null
+-actif : bool not null
+-accueil : bool not null
+-dateCreation : datetime not null
+-dateModification : datetime not null
+-categorie : array not null
+
+}
+
+class Ville {
+
+-nom : string not null
+-codePostal : string not null
+-nomDepartement : string not null
+-numDepartement : int not null
+-nomRegion : string not null
+
+}
+
+class Catégorie {
+
+-nom : string not null
+-dateCreation : datetime not null
+
+}
+
+Etablissement "0..* " -- "1..*  "Catégorie
+Etablissement "0..* "-- "1..*"Ville
+@enduml
