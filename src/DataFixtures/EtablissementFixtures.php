@@ -46,7 +46,7 @@ class EtablissementFixtures extends Fixture
                 ->setAccueil($faker->boolean(50))
                 ->setActif($faker->boolean(50))
                 ->setAdresse($faker->address)
-                ->setCreatedAt(New DateTimeImmutable())
+                ->setCreatedAt($faker->dateTimeBetween('-1 years'))
                 ->setDescription($faker->paragraphs($faker->numberBetween(1,3),true))
                 ->setEmail($faker->email)
                 ->setNumTel($faker->phoneNumber)

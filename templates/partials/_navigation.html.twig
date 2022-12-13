@@ -31,7 +31,7 @@
                             {% if app.user.pseudo %}
                             {{ app.user.pseudo }}
                             {% else %}
-                            {{ app.user.prenom }}{{ app.user.nom }}
+                            {{ app.user.prenom }} {{ app.user.nom |upper }}
                             {% endif %}
                         </a>
                         <a class="nav-link active" aria-current="page" href="{{ path("app_logout") }}">Déconnexion</a>

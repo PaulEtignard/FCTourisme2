@@ -45,10 +45,10 @@ class Etablissement
     private ?bool $accueil = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTime $createdAt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $modfiedAt;
+    private ?\DateTime $modfiedAt;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'etablissements')]
     private Collection $categorie;
@@ -171,24 +171,24 @@ class Etablissement
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getModfiedAt(): ?\DateTimeImmutable
+    public function getModfiedAt(): ?\DateTime
     {
         return $this->modfiedAt;
     }
 
-    public function setModfiedAt(\DateTimeImmutable $modfiedAt): self
+    public function setModfiedAt(\DateTime $modfiedAt): self
     {
         $this->modfiedAt = $modfiedAt;
 

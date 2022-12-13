@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Etablissements{% endblock %}
+{% block title %}Hello AcceuilController!{% endblock %}
 
 {% block body %}
+<h1>Bienvenue sur FCTourisme</h1>
+
+    <h3>Voici les 4 dernier etablissements :</h3>
     <div class="container text-center">
         <div class="row row-cols-auto">
             {% for Etablissement in Etablissements %}
@@ -36,12 +39,4 @@
             {% endfor %}
         </div>
     </div>
-    <div class="container mt-4">
-        <div class="row">
-            <div class="d-flex align-items-center justify-content-center">
-                {{ knp_pagination_render(Etablissements) }}
-            </div>
-        </div>
-    </div>
-
 {% endblock %}
