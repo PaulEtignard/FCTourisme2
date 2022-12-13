@@ -36,6 +36,20 @@ class Catégorie {
 
 }
 
+
+class Utilisateur {
+
+prenom : string not null
+nom : string not null
+pseudo : string not null
+email : string not null
+password : string not null
+DateCreation : date not null
+Datemodification : date not null
+Role role
+estactif : boolean not null
+}
+
 Etablissement "0..* " -- "1..*  "Catégorie
 Etablissement "0..* "-- "1..*"Ville
 @enduml
