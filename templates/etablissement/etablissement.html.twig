@@ -24,6 +24,9 @@
     <p class="mt-3">{{ Etablissement.description }}</p>
     <p>Adresse : {{ Etablissement.adresse }} {{ Etablissement.ville.nom }} {{ Etablissement.ville.codePostal }}</p>
     <hr>
+    <h4 class="mt-3">Météo : </h4>
+    <p>La temptérateur est de : </p>
+    <p>Il fait actuelement {{ temp |trim('"')}} a {{ Etablissement.ville.nom }}</p>
     <h4>Nous contacter :</h4>
     <span>{{ Etablissement.numTel }}</span>
     <br>

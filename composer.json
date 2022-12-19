@@ -13,6 +13,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
         "fakerphp/faker": "^1.20",
+        "guzzlehttp/guzzle": "^7.5",
         "knplabs/knp-paginator-bundle": "^6.0",
         "league/csv": "^9.0",
         "phpdocumentor/reflection-docblock": "^5.3",
