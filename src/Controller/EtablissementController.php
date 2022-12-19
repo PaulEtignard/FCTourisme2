@@ -67,12 +67,44 @@ class EtablissementController extends AbstractController
             $manager->persist($etablissement);
         }
         $manager->flush();
-
-
-
-
         return $this->redirectToRoute("app_etablissements");
-
-
     }
+    #[Route('/etablissementFav/{slug}/fav', name: 'app_etablissementfav_slug_fav')]
+    public function AddFavorisfav($slug, EntityManagerInterface $manager): Response
+    {
+        $etablissement = $this->etablissementRepository->findOneBy(["slug"=>$slug]);
+        $user = $this->userRepository->find($this->getUser());
+
+        if (in_array($etablissement,$user->getEtablissementFavorits()->toArray())){
+            $user->removeEtablissementFavorit($etablissement);
+            $manager->persist($user);
+
+            $etablissement->removeFavBy($user);
+            $manager->persist($etablissement);
+        } else {
+            $user->addEtablissementFavorit($etablissement);
+            $manager->persist($user);
+
+            $etablissement->addFavBy($user);
+            $manager->persist($etablissement);
+        }
+        $manager->flush();
+        return $this->redirectToRoute("app_etablissement_fav");
+    }
+    #[Route('/etablissements/favori', name: 'app_etablissement_fav')]
+    public function EtablissementsFavoris(PaginatorInterface $paginator, Request $request): Response
+    {
+        $user = $this->userRepository->find($this->getUser());
+
+        $Etablissements = $paginator->paginate(
+            $user->getEtablissementFavorits(),
+            $request->query->getInt("page",1),
+            12
+        );
+
+        return $this->render('etablissement/etablissementsFavori.html.twig', [
+            "Etablissements" => $Etablissements
+        ]);
+    }
+
 }

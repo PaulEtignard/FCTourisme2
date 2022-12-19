@@ -3,6 +3,7 @@
 {% block title %}{{ Etablissement.nom }}{% endblock %}
 
 {% block body %}
+
     <h1 class="mt-4">{{ Etablissement.nom }}</h1>
     {% for categorie in Etablissement.categorie  %}
         <span class="badge text-bg-secondary">{{ categorie.nom | capitalize }}</span>
