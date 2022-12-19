@@ -3,37 +3,42 @@
 {% block title %}{{ Etablissement.nom }}{% endblock %}
 
 {% block body %}
+    <div class="d-flex mt-5 ms-5">
+        <div style="background-color: #FFFFFF;  width: 65%; border-radius: 20px">
+            <h1 style="margin-top: 40px; margin-left: 40px">{{ Etablissement.nom }}</h1>
+            <p class="mx-auto " style="font-size: 20px; background-color: #D9D9D9; border-radius: 20px; padding: 10px ; padding-left: 30px; height: 50px; width: 93%">{{ Etablissement.Adresse }}</p>
+            <p class="mx-auto" style="font-size: 20px; background-color: #D9D9D9; border-radius: 20px; padding: 30px; height: 430px; width: 93%">{{ Etablissement.description }}</p>
+        </div>
+        <div style="width: 25%;margin-left: 40px">
+            <div style="background-color: #FFFFFF; height: 510px; width: 100%; border-radius: 20px">
+                <div style="padding:40px;">
+                    <h1 style="">Météo a {{  Etablissement.ville.nom }}</h1>
+                    <p style="font-size: 20px; margin-top:40px; background-color: #D9D9D9; border-radius: 20px; padding: 10px ; padding-left: 30px; height: 100%; width: 100%">{{ Etablissement.Adresse }}</p>
+                </div>
+            </div>
+            <div style="background-color: #FFFFFF; height: 150px; width: 100%; margin-top: 40px; border-radius: 20px;display: flex;justify-content: center;align-items: center;">
+                <div class="d-flex" style="justify-content: space-evenly; width: 100%">
+                    {% if app.user %}
+                        {% if Etablissement in app.user.EtablissementFavorits %}
+                            <a style="background-color: #D9D9D9; width: 30%; height: 50px; text-decoration: none; color: black; display: flex;justify-content: center;align-items: center; border-radius: 10px" href="{{ path("app_etablissementdetail_slug_fav", {'slug': Etablissement.slug}) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                                    <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                                </svg>
+                            </a>
+                        {% else %}
+                            <a style="background-color: #D9D9D9; width: 30%; height: 50px; text-decoration: none; color: black; display: flex;justify-content: center;align-items: center; border-radius: 10px" href="{{ path("app_etablissementdetail_slug_fav", {'slug': Etablissement.slug}) }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                                </svg>
+                            </a>
+                        {% endif%}
+                    {% endif %}
+                    <a style="background-color: #D9D9D9; width: 30%; height: 50px; text-decoration: none; color: black; display: flex;justify-content: center;align-items: center; border-radius: 10px" href="{{ path("app_etablissements") }}">Retour</a>
 
-    <h1 class="mt-4">{{ Etablissement.nom }}{% if app.user %}
-            {% if Etablissement in app.user.EtablissementFavorits %}
-                <a  class=" me-2" href="{{ path("app_etablissementdetail_slug_fav", {'slug': Etablissement.slug}) }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
-                <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
-                    </svg></a>
-            {% else %}
-                <a class="me-2" href="{{ path("app_etablissementdetail_slug_fav", {'slug': Etablissement.slug}) }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
-                    </svg>
-                </a>
-            {% endif%}
-        {% endif %}</h1>
-    {% for categorie in Etablissement.categorie  %}
-        <span class="badge text-bg-secondary">{{ categorie.nom | capitalize }}</span>
-    {% endfor %}
-    <h4 class="mt-3">Déscription :</h4>
-    <p class="mt-3">{{ Etablissement.description }}</p>
-    <p>Adresse : {{ Etablissement.adresse }} {{ Etablissement.ville.nom }} {{ Etablissement.ville.codePostal }}</p>
-    <hr>
-    <h4>Nous contacter :</h4>
-    <span>{{ Etablissement.numTel }}</span>
-    <br>
-    <span>{{ Etablissement.email }}</span>
-    <br>
-    <div class="d-flex justify-content-end mt-4">
-        <a class="btn"
-           href="{{ path("app_etablissements") }}">Retour</a>
-        <i class="bi bi-box-arrow-left"></i>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
