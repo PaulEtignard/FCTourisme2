@@ -20,12 +20,12 @@ final class Version20221219121639 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE etablissement CHANGE created_at created_at DATETIME NOT NULL, CHANGE modfied_at modfied_at DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE etablissement CHANGE created_at created_at DATETIME NOT NULL, CHANGE modfied_at modfied_at DATETIME NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE etablissement CHANGE created_at created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', CHANGE modfied_at modfied_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
+        $this->addSql('ALTER TABLE etablissement CHANGE created_at created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', CHANGE modfied_at modfied_at DATETIME NULL COMMENT \'(DC2Type:datetime_immutable)\'');
     }
 }

@@ -46,33 +46,10 @@ class EtablissementController extends AbstractController
     public function EtablissementSlug($slug): Response
     {
         $etablissement = $this->etablissementRepository->findOneBy(["slug"=>$slug]);
-        $nomville = $etablissement->getVille()->getNom();
-
-        $response = $this->client->request(
-            'GET',
-            'http://api.openweathermap.org/geo/1.0/direct?q='.$nomville.'&appid=bc337001363c1789985b1a99d552587d'
-        );
-
-        $response = explode(",",$response->getContent());
-        $reponse1 = explode(":",$response[1]);
-        $lat = $reponse1[1];
-        $reponse2 = explode(":",$response[2]);
-        $long = $reponse2[1];
-
-        $Request2 = $this->client->request(
-            'GET',
-            'https://api.openweathermap.org/data/2.5/weather?lat='.$lat.'&lon='.$long.'&lang=fr&appid=bc337001363c1789985b1a99d552587d'
-        );
-
-        $meteoexpode = explode(",",$Request2->getContent());
-
-        $Temp = explode(":",$meteoexpode[4]);
-        dd($meteoexpode);
-
 
         return $this->render('etablissement/etablissement.html.twig', [
-            "Etablissement" => $etablissement,
-            "temp"=>$Temp[1]
+            "Etablissement" => $etablissement
+
         ]);
 
 
