@@ -34,13 +34,20 @@ class EtablissementFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker= Factory::create('fr_FR');
+
+
         $idMin = $this->villeRepository->findOneBy([],["id"=>"asc"]);
         $idmax = $this->villeRepository->findOneBy([],["id"=>"desc"]);
-        $Catmin = $this->categorieRepository->findOneBy([],["id"=>"desc"]);
+        $Catmin = $this->categorieRepository->findOneBy([],["id"=>"asc"]);
         $Catmax = $this->categorieRepository->findOneBy([],["id"=>"desc"]);
 
 
         for($i=1;$i<50;$i++){
+            $nbcat = $faker->numberBetween(1,3);
+            $nbcat1 = $faker->numberBetween($Catmin->getId(),$Catmax->getId());
+            $nbcat2 = $faker->numberBetween($Catmin->getId(),$Catmax->getId());
+            $nbcat3 = $faker->numberBetween($Catmin->getId(),$Catmax->getId());
+
             $etablissement = new Etablissement();
             $etablissement->setNom($faker->company)
                 ->setAccueil($faker->boolean(50))
@@ -51,8 +58,17 @@ class EtablissementFixtures extends Fixture
                 ->setEmail($faker->email)
                 ->setNumTel($faker->phoneNumber)
                 ->setVille($this->villeRepository->findOneBy(["id"=>$faker->numberBetween($idMin->getId(),$idmax->getId())]))
-                ->setSlug($this->slugger->slug($etablissement->getNom()))
-                ->addCategorie($this->categorieRepository->findOneBy(["id"=>$faker->numberBetween($Catmin->getId(),$Catmax->getId())]));
+                ->setSlug($this->slugger->slug($etablissement->getNom()));
+            if ($nbcat == 1){
+                $etablissement->addCategorie($this->categorieRepository->findOneBy(["id"=>$nbcat1]));
+            } elseif ($nbcat == 2){
+                $etablissement->addCategorie($this->categorieRepository->findOneBy(["id"=>$nbcat1]))
+                    ->addCategorie($this->categorieRepository->findOneBy(["id"=>$nbcat2]));
+            } elseif ($nbcat==3){
+                $etablissement->addCategorie($this->categorieRepository->findOneBy(["id"=>$nbcat1]))
+                    ->addCategorie($this->categorieRepository->findOneBy(["id"=>$nbcat2]))
+                    ->addCategorie($this->categorieRepository->findOneBy(["id"=>$nbcat3]));
+            }
             $manager->persist($etablissement);
         }
         $manager->flush();

@@ -25,6 +25,8 @@ class EtablissementController extends AbstractController
         $this->etablissementRepository = $etablissementRepository;
         $this->userRepository = $userRepository;
     }
+
+
     #[Route('/etablissements', name: 'app_etablissements')]
     public function allEtablissement(PaginatorInterface $paginator, Request $request): Response
     {
@@ -40,6 +42,9 @@ class EtablissementController extends AbstractController
     #[Route('/etablissement/{slug}', name: 'app_etablissement_slug')]
     public function EtablissementSlug($slug): Response
     {
+
+
+
         $etablissement = $this->etablissementRepository->findOneBy(["slug"=>$slug]);
         return $this->render('etablissement/etablissement.html.twig', [
             "Etablissement" => $etablissement
@@ -105,6 +110,28 @@ class EtablissementController extends AbstractController
         return $this->render('etablissement/etablissementsFavori.html.twig', [
             "Etablissements" => $Etablissements
         ]);
+    }
+    #[Route('/etablissementdetail/{slug}/fav', name: 'app_etablissementdetail_slug_fav')]
+    public function AddFavorisdetail($slug, EntityManagerInterface $manager): Response
+    {
+        $etablissement = $this->etablissementRepository->findOneBy(["slug"=>$slug]);
+        $user = $this->userRepository->find($this->getUser());
+
+        if (in_array($etablissement,$user->getEtablissementFavorits()->toArray())){
+            $user->removeEtablissementFavorit($etablissement);
+            $manager->persist($user);
+
+            $etablissement->removeFavBy($user);
+            $manager->persist($etablissement);
+        } else {
+            $user->addEtablissementFavorit($etablissement);
+            $manager->persist($user);
+
+            $etablissement->addFavBy($user);
+            $manager->persist($etablissement);
+        }
+        $manager->flush();
+        return $this->redirectToRoute("app_etablissement_slug",["slug"=>$slug]);
     }
 
 }
