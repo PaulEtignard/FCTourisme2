@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -57,6 +59,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $estactif = null;
+
+    #[ORM\ManyToMany(targetEntity: Etablissement::class, inversedBy: 'favBy')]
+    private Collection $EtablissementFavorits;
+
+    public function __construct()
+    {
+        $this->EtablissementFavorits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -195,6 +205,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEstactif(bool $estactif): self
     {
         $this->estactif = $estactif;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Etablissement>
+     */
+    public function getEtablissementFavorits(): Collection
+    {
+        return $this->EtablissementFavorits;
+    }
+
+    public function addEtablissementFavorit(Etablissement $etablissementFavorit): self
+    {
+        if (!$this->EtablissementFavorits->contains($etablissementFavorit)) {
+            $this->EtablissementFavorits->add($etablissementFavorit);
+        }
+
+        return $this;
+    }
+
+    public function removeEtablissementFavorit(Etablissement $etablissementFavorit): self
+    {
+        $this->EtablissementFavorits->removeElement($etablissementFavorit);
 
         return $this;
     }

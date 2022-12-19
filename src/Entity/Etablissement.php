@@ -53,9 +53,13 @@ class Etablissement
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'etablissements')]
     private Collection $categorie;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'EtablissementFavorits')]
+    private Collection $favBy;
+
     public function __construct()
     {
         $this->categorie = new ArrayCollection();
+        $this->favBy = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -215,6 +219,33 @@ class Etablissement
     public function removeCategorie(categorie $categorie): self
     {
         $this->categorie->removeElement($categorie);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFavBy(): Collection
+    {
+        return $this->favBy;
+    }
+
+    public function addFavBy(User $favBy): self
+    {
+        if (!$this->favBy->contains($favBy)) {
+            $this->favBy->add($favBy);
+            $favBy->addEtablissementFavorit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavBy(User $favBy): self
+    {
+        if ($this->favBy->removeElement($favBy)) {
+            $favBy->removeEtablissementFavorit($this);
+        }
 
         return $this;
     }

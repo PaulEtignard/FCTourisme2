@@ -37,7 +37,7 @@ class Catégorie {
 }
 
 
-class Utilisateur {
+class User {
 
 prenom : string not null
 nom : string not null
@@ -48,8 +48,10 @@ DateCreation : date not null
 Datemodification : date not null
 Role role
 estactif : boolean not null
+EtablissementFavorits : EtablissementArray
 }
 
 Etablissement "0..* " -- "1..*  "Catégorie
 Etablissement "0..* "-- "1..*"Ville
+Etablissement "0..*"--"0..*"User
 @enduml
