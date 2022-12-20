@@ -46,6 +46,8 @@ class EtablissementController extends AbstractController
     public function EtablissementSlug($slug): Response
     {
         $etablissement = $this->etablissementRepository->findOneBy(["slug"=>$slug]);
+        $nomville = $etablissement->getVille()->getNom();
+
 
         return $this->render('etablissement/etablissement.html.twig', [
             "Etablissement" => $etablissement
