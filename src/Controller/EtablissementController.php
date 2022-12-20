@@ -44,34 +44,10 @@ class EtablissementController extends AbstractController
         );
         return $this->render('etablissement/index.html.twig', [
             'Etablissements' => $etablissements,
-            "ancienneRoute" =>$route
+            "route" =>$route
         ]);
     }
 
-    #[Route('/etablissements/Tri/PlusRécent', name: 'app_etablissements_orderby_date_DESC')]
-    public function allEtablissementOrderByDateDESC(PaginatorInterface $paginator, Request $request): Response
-    {
-        $etablissements = $paginator->paginate(
-            $this->etablissementRepository->findBy(["actif"=>'true'],['createdAt'=>'desc']),
-            $request->query->getInt("page",1),
-            12
-        );
-        return $this->render('etablissement/index.html.twig', [
-            'Etablissements' => $etablissements,
-        ]);
-    }
-    #[Route('/etablissements/Tri/PlusVieux', name: 'app_etablissements_orderby_date_ASC')]
-    public function allEtablissementOrderByDateASC(PaginatorInterface $paginator, Request $request): Response
-    {
-        $etablissements = $paginator->paginate(
-            $this->etablissementRepository->findBy(["actif"=>'true'],['createdAt'=>'ASC']),
-            $request->query->getInt("page",1),
-            12
-        );
-        return $this->render('etablissement/index.html.twig', [
-            'Etablissements' => $etablissements,
-        ]);
-    }
     #[Route('/etablissement/{slug}', name: 'app_etablissement_slug')]
     public function EtablissementSlug($slug): Response
     {
@@ -82,6 +58,7 @@ class EtablissementController extends AbstractController
 
         ]);
     }
+
     #[Route('/etablissement/{slug}/fav', name: 'app_etablissement_slug_fav')]
     public function AddFavoris($slug, EntityManagerInterface $manager): Response
     {
@@ -98,16 +75,63 @@ class EtablissementController extends AbstractController
         } else {
             $user->addEtablissementFavorit($etablissement);
             $manager->persist($user);
-
             $etablissement->addFavBy($user);
             $manager->persist($etablissement);
         }
         $manager->flush();
         return $this->redirectToRoute("app_etablissements");
     }
+
+    #[Route('/etablissement/favori/{slug}/fav', name: 'app_etablissementfav_slug_fav')]
+    public function AddFavorisfav($slug, EntityManagerInterface $manager): Response
+    {
+        $etablissement = $this->etablissementRepository->findOneBy(["slug"=>$slug]);
+
+        $user = $this->userRepository->find($this->getUser());
+
+        if (in_array($etablissement,$user->getEtablissementFavorits()->toArray())){
+            $user->removeEtablissementFavorit($etablissement);
+            $manager->persist($user);
+
+            $etablissement->removeFavBy($user);
+            $manager->persist($etablissement);
+        } else {
+            $user->addEtablissementFavorit($etablissement);
+            $manager->persist($user);
+            $etablissement->addFavBy($user);
+            $manager->persist($etablissement);
+        }
+        $manager->flush();
+        return $this->redirectToRoute("app_etablissement_fav");
+    }
+
+    #[Route('/etablissement/{cat}/{slug}/fav', name: 'app_etablissement_slug_cat_fav')]
+    public function AddFavorisCat($slug, $cat, EntityManagerInterface $manager): Response
+    {
+        $etablissement = $this->etablissementRepository->findOneBy(["slug"=>$slug]);
+
+        $user = $this->userRepository->find($this->getUser());
+
+        if (in_array($etablissement,$user->getEtablissementFavorits()->toArray())){
+            $user->removeEtablissementFavorit($etablissement);
+            $manager->persist($user);
+
+            $etablissement->removeFavBy($user);
+            $manager->persist($etablissement);
+        } else {
+            $user->addEtablissementFavorit($etablissement);
+            $manager->persist($user);
+            $etablissement->addFavBy($user);
+            $manager->persist($etablissement);
+        }
+        $manager->flush();
+        return $this->redirectToRoute("app_etablissement_categorie",['categorie'=>$cat]);
+    }
+
     #[Route('/etablissements/favori', name: 'app_etablissement_fav')]
     public function EtablissementsFavoris(PaginatorInterface $paginator, Request $request): Response
     {
+        $route = $request->attributes->get('_route');
         $user = $this->userRepository->find($this->getUser());
 
         $Etablissements = $paginator->paginate(
@@ -117,9 +141,11 @@ class EtablissementController extends AbstractController
         );
 
         return $this->render('etablissement/index.html.twig', [
-            "Etablissements" => $Etablissements
+            "Etablissements" => $Etablissements,
+            "route"=>$route
         ]);
     }
+
     #[Route('/etablissementdetail/{slug}/fav', name: 'app_etablissementdetail_slug_fav')]
     public function AddFavorisdetail($slug, EntityManagerInterface $manager): Response
     {
@@ -142,9 +168,11 @@ class EtablissementController extends AbstractController
         $manager->flush();
         return $this->redirectToRoute("app_etablissement_slug",["slug"=>$slug]);
     }
+
     #[Route('/etablissements/{categorie}', name: 'app_etablissement_categorie')]
     public function Etablissementsrestaurant(PaginatorInterface $paginator, Request $request,$categorie): Response
     {
+        $route = $request->attributes->get('_route');
         $categorie = $this->categorieRepository->findOneBy(["nom"=>$categorie]);
         $listeEtablissement = $categorie->getEtablissements();
         $etablissements = [];
@@ -161,7 +189,9 @@ class EtablissementController extends AbstractController
         );
 
         return $this->render('etablissement/index.html.twig', [
-            "Etablissements" => $Etablissements
+            "Etablissements" => $Etablissements,
+            "route"=>$route,
+            "categorie"=>$categorie
         ]);
     }
 
