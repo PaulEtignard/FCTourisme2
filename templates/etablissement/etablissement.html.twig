@@ -9,7 +9,7 @@
             {%for categorie in Etablissement.categorie %}
                 <h5>{{ categorie.nom }}</h5>
             {%endfor %}
-            <p class="mx-auto " style="font-size: 20px; background-color: #D9D9D9; border-radius: 20px; padding: 10px ; padding-left: 30px; height: 50px; width: 100%">{{ Etablissement.Adresse }}</p>
+            <p class="mx-auto " style="font-size: 20px; background-color: #D9D9D9; border-radius: 20px; padding: 10px ; padding-left: 30px; height: 50px; width: 100%">{{ Etablissement.Adresse }} {{ Etablissement.ville.CodePostal }} {{ Etablissement.ville.nom }}</p>
             <div class="mx-auto" style="font-size: 20px; background-color: #D9D9D9; border-radius: 20px; padding: 30px; height: 60%; width: 100%">{{ Etablissement.description }}</div>
             <div style="display: flex; flex-direction: row-reverse; margin-top: 10px">
                 <p>{{ Etablissement.createdAt | date('d-m-Y') }}</p>
@@ -23,7 +23,7 @@
                     <h1 style="">Météo a {{  Etablissement.ville.nom }}</h1>
 
 
-                    <p style="font-size: 20px; margin-top:40px; background-color: #D9D9D9; border-radius: 20px; padding: 10px ; padding-left: 30px; height: 100%; width: 100%">{{ Etablissement.Adresse }}</p>
+                    <p style="font-size: 20px; margin-top:40px; background-color: #D9D9D9; border-radius: 20px; padding: 10px ; padding-left: 30px; height: 100%; width: 100%">Météo a implémenter</p>
                 </div>
             </div>
             <div style="background-color: #FFFFFF; height: 150px; width: 100%; margin-top: 40px; border-radius: 20px;display: flex;justify-content: center;align-items: center;">

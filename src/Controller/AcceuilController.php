@@ -24,7 +24,7 @@ class AcceuilController extends AbstractController
     public function index(): Response
     {
 
-        $etablissements = $this->etablissementRepository->findBy([],["createdAt"=>"DESC"],4);
+        $etablissements = $this->etablissementRepository->findBy([],["createdAt"=>"DESC"],3);
 
 
         return $this->render('acceuil/index.html.twig', [
