@@ -67,14 +67,12 @@ class EtablissementController extends AbstractController
         $user = $this->userRepository->find($this->getUser());
 
         if (in_array($etablissement,$user->getEtablissementFavorits()->toArray())){
-            $user->removeEtablissementFavorit($etablissement);
-            $manager->persist($user);
+
 
             $etablissement->removeFavBy($user);
             $manager->persist($etablissement);
         } else {
-            $user->addEtablissementFavorit($etablissement);
-            $manager->persist($user);
+
             $etablissement->addFavBy($user);
             $manager->persist($etablissement);
         }
@@ -90,14 +88,12 @@ class EtablissementController extends AbstractController
         $user = $this->userRepository->find($this->getUser());
 
         if (in_array($etablissement,$user->getEtablissementFavorits()->toArray())){
-            $user->removeEtablissementFavorit($etablissement);
-            $manager->persist($user);
+
 
             $etablissement->removeFavBy($user);
             $manager->persist($etablissement);
         } else {
-            $user->addEtablissementFavorit($etablissement);
-            $manager->persist($user);
+
             $etablissement->addFavBy($user);
             $manager->persist($etablissement);
         }
@@ -113,14 +109,12 @@ class EtablissementController extends AbstractController
         $user = $this->userRepository->find($this->getUser());
 
         if (in_array($etablissement,$user->getEtablissementFavorits()->toArray())){
-            $user->removeEtablissementFavorit($etablissement);
-            $manager->persist($user);
+
 
             $etablissement->removeFavBy($user);
             $manager->persist($etablissement);
         } else {
-            $user->addEtablissementFavorit($etablissement);
-            $manager->persist($user);
+
             $etablissement->addFavBy($user);
             $manager->persist($etablissement);
         }
@@ -153,15 +147,9 @@ class EtablissementController extends AbstractController
         $user = $this->userRepository->find($this->getUser());
 
         if (in_array($etablissement,$user->getEtablissementFavorits()->toArray())){
-            $user->removeEtablissementFavorit($etablissement);
-            $manager->persist($user);
-
             $etablissement->removeFavBy($user);
             $manager->persist($etablissement);
         } else {
-            $user->addEtablissementFavorit($etablissement);
-            $manager->persist($user);
-
             $etablissement->addFavBy($user);
             $manager->persist($etablissement);
         }

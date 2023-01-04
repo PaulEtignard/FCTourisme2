@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1>Créer un nouvel article</h1>
+        {{ form_start(formUser) }}
+        {{ form_row(formUser.nom, {
+            'attr' : {
+                 'placeholder' : "Veuillez saisir un nom"
+            }
+         }) }}
+        {{ form_row(formUser.prenom,{
+    'attr' : {
+        'placeholder' : "Veuillez saisir un prénom"
+            }
+    }) }}
+        {{ form_row(formUser.pseudo, {
+    'attr' : {
+        'placeholder' : "Veuillez saisir un pseudo"
+            }
+    }) }}
+        {{ form_row(formUser.email, {
+    'attr' : {
+        'placeholder' : "Veuillez saisir une adresse email"
+            }
+    }) }}
+        {{ form_row(formUser.password, {
+            'help' : 'Le mot de passe doit contenir au moin 8 caractères',
+            'attr' : {
+                'placeholder' : "Veuillez saisir un mot de passe"
+            }
+        }) }}
+        <input type="submit" class="btn btn-primary" value="Valider"/>
+        {{ form_end(formUser) }}
+
+    </div>
+
+{% endblock %}

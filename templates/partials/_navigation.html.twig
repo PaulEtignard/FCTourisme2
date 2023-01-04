@@ -15,10 +15,9 @@
         </div>
 
         <ul class="navbar-nav">
-
-
                 {% if app.user == false %}
-            <li class="nav-item">
+            <li class="nav-item d-flex">
+                    <a class="nav-link active" aria-current="page" href="{{ path("app_inscription") }}">Inscription</a>
                     <a class="nav-link active" aria-current="page" href="{{ path("app_login") }}">Connexion</a>
             </li>
                 {% endif %}
