@@ -21,7 +21,6 @@ class EditUserType extends AbstractType
             ->add('pseudo')
             ->add('createdAt')
             ->add('editedAt')
-            ->add('estactif')
             ->add('imageFile',VichImageType::class)
 
         ;
