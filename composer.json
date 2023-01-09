@@ -5,6 +5,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.1",
+        "ext-cassandra": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.0",
@@ -51,7 +52,7 @@
         "symfony/yaml": "6.1.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-      "ext-cassandra": "*"
+        "vich/uploader-bundle": "^2.0"
     },
     "config": {
         "allow-plugins": {

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1>Créer un nouvel article</h1>
+        {{ form_start(formUser) }}
+        {{ form_row(formUser.nom) }}
+        {{ form_row(formUser.prenom) }}
+        {{ form_row(formUser.pseudo) }}
+        {{ form_row(formUser.email) }}
+        {{ form_row(formUser.imageFile) }}
+        <input type="submit" class="btn btn-primary" value="Valider"/>
+        {{ form_end(formUser) }}
+
+    </div>
+
+{% endblock %}

@@ -48,7 +48,7 @@ DateCreation : date not null
 Datemodification : date not null
 Role role
 estactif : boolean not null
-EtablissementFavorits : EtablissementArray
+EtablissementFavoris : EtablissementArray
 }
 
 Etablissement "0..* " -- "1..*  "Catégorie

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}mon compte{% endblock %}
+
+{% block body %}
+    <div class="mt-4" style="width: 100%; display: flex; justify-content: center">
+        <div style="
+        background-color: #D9D9D9;
+        width: 1000px;
+        height: 500px;
+        border-radius: 20px;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        ">
+            <div style="width: 100%; height: 50%; background-color: #D9D9D9; margin-bottom: 40px; padding: 20px; display: flex; justify-content: space-between">
+                <div style="background-color: #FFFFFF; width: 20%; border-radius: 20px;height: 100%"></div>
+                <div style="background-color: #d9d9d9; width: 70%; height: 100%; padding: 10px; display: flex; flex-direction: column; justify-content: space-between">
+                    <div style="width: 100%; height: 45%;border-radius: 20px; background-color: #FFFFFF;display: flex; align-items: center; padding: 20px; font-size: 30px">{{ app.user.nom }} {{ app.user.prenom }}</div>
+                    <div style="width: 70%; height: 45%;border-radius: 20px; background-color: #FFFFFF;display: flex; align-items: center; padding: 20px; font-size: 20px">Alias : {{ app.user.pseudo }}</div>
+                </div>
+            </div>
+            <div style="width: 100%; height: 50%; background-color: #D9D9D9; display: flex;align-items: flex-end;border-radius: 20px; justify-content: space-between">
+                <div style="background-color: #FFFFFF; height: 100%;border-radius: 20px; width: 89%; padding: 20px">
+                    <p>Email : {{ app.user.email }}</p>
+                    <p>Date de création du compte : {{ app.user.createdAt |date("d-m-Y") }}</p>
+                    <p>Dernière modification sur le compte le : {{ app.user.editedAt  |date("d-m-Y")}}</p>
+                </div>
+                <div style="background-color: #FFFFFF; height: 20%;border-radius: 5px; width: 9%; display: flex; justify-content: center; align-items: center">
+                    <a href="{{ path("app_compte_modifier") }}">Modifier</a></div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock body %}

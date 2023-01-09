@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
                 ->setCreatedAt(new \DateTime())
                 ->setNom($faker->lastName)
                 ->setPrenom($faker->firstName)
-                ->setEstactif($faker->boolean(50));
+                ->setActif($faker->boolean(50));
             if ($faker->boolean(75)){
                 $user->setPseudo($faker->userName);
             }
@@ -63,7 +63,7 @@ class UserFixtures extends Fixture
             ->setCreatedAt(new \DateTime())
             ->setNom("Admin")
             ->setPrenom("Admin")
-            ->setEstactif(true)
+            ->setActif(true)
             ->setPseudo("Admin")
             ->setPassword($this->passwordHasher->hashPassword(
                 $user,

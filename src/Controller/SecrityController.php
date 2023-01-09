@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+
+use App\Form\EditUserType;
 use App\Form\InscriptionType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,8 +47,6 @@ class SecrityController extends AbstractController
             $user->setCreatedAt(new \DateTime())
                 ->setEstactif(0)
                 ->setRoles(["ROLE_USER"]);
-
-
             $passwordHash = $passwordHasher->hashPassword(
                 $user,
                 $user->getPassword()
@@ -62,6 +62,34 @@ class SecrityController extends AbstractController
             'formUser' => $formUser
         ]);
     }
+
+    #[Route('/compte', name: 'app_compte')]
+    public function compte(): Response
+    {
+        $user = $this->getUser();
+
+        return $this->render('compte/compte.html.twig', [
+
+        ]);
+
+    }
+
+    #[Route('/compte/modifier', name: 'app_compte_modifier',methods: ['GET','POST'],priority: 1)]
+    public function editCompte(Request $request): Response
+    {
+        $user = $this->getUser();
+        $formUser = $this->createForm(EditUserType::class, $user);
+        $formUser->handleRequest($request);
+        if ($formUser->isSubmitted()) {
+
+        }
+        return $this->renderForm('compte/modifierCompte.html.twig',[
+            'formUser' => $formUser
+        ]);
+
+    }
+
+
 
 
 }
