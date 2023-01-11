@@ -26,7 +26,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Assert\Email]
     private ?string $email = null;
 
@@ -37,29 +37,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank]
-    #[Assert\Length(min: 8)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 8
+    ,minMessage: "le mot de passe doit faire minimum {{ limit }} caractère")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    #[Assert\Length(min: 2, max: 60)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 60
+    ,minMessage: "le nom doit faire minimum {{ limit }} caractère",
+    maxMessage: "le nom ne doit pas dépasser {{ limit }} caractère")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    #[Assert\Length(min: 2, max: 60)]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2, max: 60
+        ,minMessage: "le prénom doit faire minimum {{ limit }} caractère",
+        maxMessage: "le prénom ne doit pas dépasser {{ limit }} caractère")]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length(min: 2, max: 60)]
+    #[Assert\Length(min: 2, max: 60,minMessage: "le pseudo doit faire minimum {{ limit }} caractère",
+        maxMessage: "le pseudo ne doit pas dépasser {{ limit }} caractère")]
     private ?string $pseudo = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $editedAt = null;
+    #[ORM\Column(name: 'edited_at',type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column (name: 'EstActif')]
     private ?bool $actif = null;
@@ -72,7 +78,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Vich\UploadableField(mapping: 'photopr', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     private ?string $imageName = null;
 
     public function __construct()
@@ -197,14 +203,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEditedAt(): ?\DateTimeInterface
+    public function getupdatedAt(): ?\DateTimeInterface
     {
-        return $this->editedAt;
+        return $this->updatedAt;
     }
 
-    public function setEditedAt(?\DateTimeInterface $editedAt): self
+    public function setupdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->editedAt = $editedAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -261,7 +267,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (null !== $imageFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->editedAt = new \DateTime();
+            $this->updatedAt = new \DateTime();
         }
     }
 

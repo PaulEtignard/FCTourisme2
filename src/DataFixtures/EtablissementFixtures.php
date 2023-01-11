@@ -10,6 +10,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class EtablissementFixtures extends Fixture
 {
@@ -18,16 +19,20 @@ class EtablissementFixtures extends Fixture
     private VilleRepository $villeRepository;
     private SluggerInterface $slugger;
     private CategorieRepository $categorieRepository;
+    private ValidatorInterface $validator;
 
     /**
-     * @param EtablissementFixtures $etablissementFixtures
+     * @param VilleRepository $villeRepository
+     * @param SluggerInterface $slugger
+     * @param CategorieRepository $categorieRepository
+     * @param ValidatorInterface $validator
      */
-    public function __construct( SluggerInterface $slugger, VilleRepository $villeRepository, CategorieRepository $categorieRepository)
+    public function __construct(VilleRepository $villeRepository, SluggerInterface $slugger, CategorieRepository $categorieRepository, ValidatorInterface $validator)
     {
-
-        $this->slugger = $slugger;
         $this->villeRepository = $villeRepository;
+        $this->slugger = $slugger;
         $this->categorieRepository = $categorieRepository;
+        $this->validator = $validator;
     }
 
 
@@ -69,6 +74,7 @@ class EtablissementFixtures extends Fixture
                     ->addCategorie($this->categorieRepository->findOneBy(["id"=>$nbcat2]))
                     ->addCategorie($this->categorieRepository->findOneBy(["id"=>$nbcat3]));
             }
+
             $manager->persist($etablissement);
         }
         $manager->flush();

@@ -29,7 +29,6 @@ class SecrityController extends AbstractController
             'last_username' => $lastUsername,
             'error'         => $error,
         ]);
-
     }
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]
     public function logout()
@@ -45,7 +44,7 @@ class SecrityController extends AbstractController
         $formUser->handleRequest($request);
         if ($formUser->isSubmitted() && $formUser->isValid()){
             $user->setCreatedAt(new \DateTime())
-                ->setEstactif(0)
+                ->setActif(0)
                 ->setRoles(["ROLE_USER"]);
             $passwordHash = $passwordHasher->hashPassword(
                 $user,
@@ -53,8 +52,6 @@ class SecrityController extends AbstractController
             );
             $user->setPassword($passwordHash);
 
-
-            $user->setPassword($passwordHash);
             $userRepository->save($user,true);
             return $this->redirectToRoute('app_login');
         }
@@ -75,17 +72,20 @@ class SecrityController extends AbstractController
     }
 
     #[Route('/compte/modifier', name: 'app_compte_modifier',methods: ['GET','POST'],priority: 1)]
-    public function editCompte(Request $request): Response
+    public function editCompte(Request $request, UserRepository $userRepository): Response
     {
-        $user = $this->getUser();
+        $user = $userRepository->find($this->getUser());
         $formUser = $this->createForm(EditUserType::class, $user);
         $formUser->handleRequest($request);
-        if ($formUser->isSubmitted()) {
-
+        if ($formUser->isSubmitted() && $formUser->isValid()){
+            $user->setupdatedAt( new \DateTime());
+            $userRepository->save($user,true);
+            return $this->redirectToRoute('app_compte');
         }
         return $this->renderForm('compte/modifierCompte.html.twig',[
             'formUser' => $formUser
         ]);
+
 
     }
 

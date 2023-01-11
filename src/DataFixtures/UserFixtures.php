@@ -8,24 +8,27 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 class UserFixtures extends Fixture
 {
     private UserPasswordHasherInterface $passwordHasher;
+    private ValidatorInterface $validator;
 
     /**
      * @param UserPasswordHasherInterface $passwordHasher
+     * @param ValidatorInterface $validator
      */
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    public function __construct(UserPasswordHasherInterface $passwordHasher, ValidatorInterface $validator)
     {
         $this->passwordHasher = $passwordHasher;
+        $this->validator = $validator;
     }
 
 
     public function load(ObjectManager $manager ): void
     {
-
         $faker= Factory::create('fr_FR');
         for ($i = 0; $i < 20 ; $i++){
             $user = new User();
@@ -54,23 +57,15 @@ class UserFixtures extends Fixture
 
 
             $user->setPassword($passwordHash);
-            $manager->persist($user);
+
+            if ($this->validator->validate($user)){
+                $manager->persist($user);
+            }
+
 
 
         }
-        $admin = new User();
-        $admin->setEmail("admin@admin.fr")
-            ->setCreatedAt(new \DateTime())
-            ->setNom("Admin")
-            ->setPrenom("Admin")
-            ->setActif(true)
-            ->setPseudo("Admin")
-            ->setPassword($this->passwordHasher->hashPassword(
-                $user,
-                "admin"
-            ))
-            ->setRoles(["ROLE_ADMIN"]);
-        $manager->persist($admin);
+
 
 
         $manager->flush();

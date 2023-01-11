@@ -12,7 +12,6 @@
                     <div class="alert alert-danger " role="alert">
                         {{ error.messageKey|trans(error.messageData, 'security') }}
                     </div>
-
                 {% endif %}
                 <label for="username" class="form-label">Adresse Email</label>
                 <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" aria-describedby="emailHelp">
