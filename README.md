@@ -14,12 +14,12 @@ Le conseil général vous confie la réalisation du site après un appel d’off
 
 ## Présentation des différents outils utilisé
 
-*Langage de programmation :* Php.
-*Framework :* Symfony 6.
-*Gestionnaire de version* : Git / GitHub.
-*SGBD :* MySQL sous XAMPP.
-*Documentations :* 
- - https://symfony.com/doc/current/index.html
- - https://twig.symfony.com/doc/
- - https://www.php.net/manual/fr/index.php
+ - *Langage de programmation :* Php
+ - *Framework :* Symfony 6
+ - *Gestionnaire de version* : Git / GitHub
+ - *SGBD :* MySQL sous XAMPP
+ - *Documentations :*
+	 - https://symfony.com/doc/current/index.html
+	 - https://twig.symfony.com/doc/
+	 - https://www.php.net/manual/fr/index.php
 
