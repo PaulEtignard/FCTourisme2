@@ -1,3 +1,4 @@
+
 # **FC-TOURISME**
 ## Présentation du projet 
 Le conseil régional de Franche-Comté souhaite promouvoir les établissements touristiques de la région. Pour ce faire, il souhaite développer un site internet permettant aux propriétaires d'établissements de la région de présenter leurs établissements afin de mieux les faire connaître.
@@ -23,3 +24,13 @@ Le conseil général vous confie la réalisation du site après un appel d’off
 	 - https://twig.symfony.com/doc/
 	 - https://www.php.net/manual/fr/index.php
 
+## Mise en place du projet
+
+commandes a effectuer après l'importation avec GitHub :
+
+ - Composer install
+ - Symfony console d:d:c
+ - Symfony console doctrine:fixtures:load --purge-exclusions=ville --purge-exclusions=categorie
+ - Ajout des catégorie dans la base grâce a cette requête : 
+	 - INSERT INTO `categorie` (`id`, `nom`, `created_at`) VALUES (NULL, 'Restaurant', '2022-11-29 22:22:38.000000'), (NULL, 'hotel', '2022-11-29 22:22:38.000000'), (NULL, 'Gites', '2022-11-29 22:22:38.000000'), (NULL, 'Artisanat', '2022-11-29 22:22:38.000000'), (NULL, 'Musée', '2022-11-29 22:22:38.000000');
+- Symfony console doctrine:fixtures:load --purge-exclusions=ville --purge-exclusions=categorie
