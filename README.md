@@ -30,7 +30,7 @@ commandes a effectuer après l'importation avec GitHub :
 
  - Composer install
  - Symfony console d:d:c
- - Symfony console doctrine:fixtures:load --purge-exclusions=ville --purge-exclusions=categorie
+ - Symfony console app:import-villes-franche-comte
  - Ajout des catégorie dans la base grâce a cette requête : 
 	 - INSERT INTO `categorie` (`id`, `nom`, `created_at`) VALUES (NULL, 'Restaurant', '2022-11-29 22:22:38.000000'), (NULL, 'hotel', '2022-11-29 22:22:38.000000'), (NULL, 'Gites', '2022-11-29 22:22:38.000000'), (NULL, 'Artisanat', '2022-11-29 22:22:38.000000'), (NULL, 'Musée', '2022-11-29 22:22:38.000000');
 - Symfony console doctrine:fixtures:load --purge-exclusions=ville --purge-exclusions=categorie
