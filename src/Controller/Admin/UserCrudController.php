@@ -39,12 +39,10 @@ class UserCrudController extends AbstractCrudController
             TextField::new('prenom'),
             TextField::new('pseudo'),
             TextField::new('email'),
-            TextField::new('password')->hideOnIndex(),
             DateTimeField::new('createdAt'),
             DateTimeField::new('updatedAt'),
             BooleanField::new('Actif'),
             ArrayField::new("roles")
-
 
         ];
     }
@@ -52,7 +50,8 @@ class UserCrudController extends AbstractCrudController
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
         if (!$entityInstance instanceof User) return;
-        $entityInstance->setCreatedAt(new    \DateTime());
+        $entityInstance->setCreatedAt(new \DateTime());
+        $entityInstance->setupdatedAt(new \DateTime());
         parent::persistEntity($entityManager,$entityInstance);
     }
 
